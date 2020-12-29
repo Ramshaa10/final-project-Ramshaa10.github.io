@@ -7,8 +7,16 @@ let startt = true;
 let lostt = false;
 let helpp = false;
 let newHighScore = false;
+let startBild;
+let GameOver;
 
-// function preload() {}
+function preload() {
+  startBild = loadImage("Startbildschirm-Zoo.jpg");
+}
+function setup() {
+  startBild.loadPixels();
+}
+
 function help() {
   textSize(16);
   fill(252, 227, 255);
@@ -23,8 +31,8 @@ function help() {
 
 function start() {
   if (startt === true) {
-    fill("red");
-    ellipse(300, 100, 40, 40);
+    image(startBild, 240, 510, 120, 70);
+
     textFont("skia");
     noStroke();
     fill(29, 17, 89);
@@ -118,6 +126,7 @@ function movement() {
 
 function draw() {
   clear();
+  image(startBild, 25, 25, 50, 50);
   noStroke();
   design();
   ballMovement();
