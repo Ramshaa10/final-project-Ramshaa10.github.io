@@ -1,11 +1,11 @@
 let speed = 0;
 let ballSpeedX = 10;
 let ballSpeedY = 5;
-let scoree = 0;
-let highScoree = 0;
-let startt = true;
-let lostt = false;
-let helpp = false;
+let score = 0;
+let highScore = 0;
+let start = true;
+let lost = false;
+let help = false;
 let newHighScore = false;
 let startBild;
 let GameOver;
@@ -17,21 +17,21 @@ function setup() {
   startBild.loadPixels();
 }
 
-function help() {
+function helpButton() {
   textSize(16);
   fill(252, 227, 255);
 
   text("help", 275, 610);
 
-  if (helpp === true) {
+  if (help === true) {
     fill("green");
     ellipse(200, 200, 10, 10);
   }
 }
 
-function start() {
-  if (startt === true) {
-    image(startBild, 240, 510, 120, 70);
+function startButton() {
+  if (start === true) {
+    image(startBild, 240, 510, 120);
 
     textFont("skia");
     noStroke();
@@ -43,7 +43,7 @@ function start() {
 }
 
 function youlost() {
-  if (lostt === true) {
+  if (lost === true) {
     fill("yellow");
     rect(400, 200, 50, 50);
   }
@@ -60,22 +60,22 @@ function design() {
   }
 }
 
-function score() {
+function count() {
   noStroke();
   textFont("skia");
   textSize(40);
-  fill(21, 129, 153);
-  text("score: " + scoree, 100, 50);
+  fill("red");
+  text("score: " + score, 30, 50);
 }
 
-function highscore() {
+function highScoreCount() {
   noStroke();
   textFont("skia");
   textSize(40);
   fill(21, 129, 153);
-  text("highscore: " + highscoree, 280, 50);
+  text("highscore: " + highScore, 620, 50);
 
-  if (newHighScore === true && lostt === true) {
+  if (newHighScore === true && lost === true) {
     fill("blue");
     ellipse(359, 110, 45, 20);
   }
@@ -129,8 +129,14 @@ function draw() {
   image(startBild, 25, 25, 50, 50);
   noStroke();
   design();
+  count();
+  startButton();
+  helpButton();
+  youlost();
+  highScoreCount();
   ballMovement();
   movement();
+  fill("white");
   ellipse(ball.x, ball.y, 20, 20);
   //Objekterzeugung der Paddles
   fill("pink");
@@ -138,7 +144,8 @@ function draw() {
   fill("lightblue");
   rect(rightPaddle.x, rightPaddle.y, 20, 100);
   fill("white");
-  if (startt == true) {
+  //
+  if (start == true) {
     if (
       mouseIsPressed === true &&
       mouseX > 250 &&
@@ -147,8 +154,8 @@ function draw() {
       mouseY < 570
     ) {
       //Start
-      startt = false;
-      lostt = false;
+      start = false;
+      lost = false;
       newHighScore = false;
     }
   }
@@ -161,16 +168,16 @@ function draw() {
     mouseY < 620
   ) {
     //help
-    helpp = true;
+    help = true;
   }
 }
 
 function mousePressed() {
   if (help) {
-    helpb = false;
+    help = false;
   }
 
   if (lost) {
-    lostt = false;
+    lost = false;
   }
 }
