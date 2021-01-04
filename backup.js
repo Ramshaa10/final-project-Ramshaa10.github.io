@@ -1,8 +1,9 @@
 let speed = 0;
-let ballSpeedX = 10;
-let ballSpeedY = 5;
+// let ballSpeedX = 10;
+// let ballSpeedY = 5;
 let score = 0;
 let highScore = 0;
+// let leftscore=0;?
 let start = true;
 let lost = false;
 let help = false;
@@ -11,8 +12,10 @@ let startBild;
 let GameOver;
 
 function preload() {
-  startBild = loadImage("Startbildschirm-Zoo.jpg");
+  startBild = loadImage("./Bilder/Startbildschirm-Zoo.jpg");
 }
+console.log("startBild");
+
 function setup() {
   startBild.loadPixels();
 }
@@ -40,6 +43,7 @@ function startButton() {
     textStyle(BOLD);
     text("Start", 254, 556);
   }
+  start = false;
 }
 
 function youlost() {
@@ -63,7 +67,7 @@ function design() {
 function count() {
   noStroke();
   textFont("skia");
-  textSize(40);
+  textSize(20);
   fill("red");
   text("score: " + score, 30, 50);
 }
@@ -71,7 +75,7 @@ function count() {
 function highScoreCount() {
   noStroke();
   textFont("skia");
-  textSize(40);
+  textSize(20);
   fill(21, 129, 153);
   text("highscore: " + highScore, 620, 50);
 
@@ -83,24 +87,33 @@ function highScoreCount() {
 let ball = {
   x: 300,
   y: 100,
+  w: 20,
+  h: 20,
+  speed: 2,
+  ballSpeedX: 10,
+  ballSpeedY: 5,
 };
 let rightPaddle = {
   x: 550,
   y: 20,
+  w: 20,
+  h: 100,
 };
 let leftPaddle = {
   x: 20,
   y: 150,
+  w: 20,
+  h: 100,
 };
 
-function ballMovement() {
+function ballMovement(ball) {
   // bei den Winkel Hilfe entnommen von: https://www.youtube.com/watch?v=nl0KXCa5pJk
 
   //Rechnung aufgestellt
-  ball.x += ballSpeedX;
-  ball.x -= ballSpeedX;
-  ball.y += ballSpeedY;
-  ball.y -= ballSpeedY;
+  ball.x += ball.ballSpeedX;
+  ball.x -= ball.ballSpeedX;
+  ball.y += ball.ballSpeedY;
+  ball.y -= ball.ballSpeedY;
 }
 
 function movement() {
@@ -126,7 +139,6 @@ function movement() {
 
 function draw() {
   clear();
-  image(startBild, 25, 25, 50, 50);
   noStroke();
   design();
   count();
@@ -134,18 +146,26 @@ function draw() {
   helpButton();
   youlost();
   highScoreCount();
-  ballMovement();
+  ballMovement(ball);
   movement();
   fill("white");
-  ellipse(ball.x, ball.y, 20, 20);
+  ellipse(
+    ball.x,
+    ball.y,
+    ball.w,
+    ball.h,
+    ball.speed,
+    ball.ballSpeedX,
+    ball.ballSpeedY
+  );
   //Objekterzeugung der Paddles
   fill("pink");
-  rect(leftPaddle.x, leftPaddle.y, 20, 100);
+  rect(leftPaddle.x, leftPaddle.y, leftPaddle.w, leftPaddle.h);
   fill("lightblue");
-  rect(rightPaddle.x, rightPaddle.y, 20, 100);
+  rect(rightPaddle.x, rightPaddle.y, rightPaddle.w, rightPaddle.h);
   fill("white");
   //
-  if (start == true) {
+  if (start) {
     if (
       mouseIsPressed === true &&
       mouseX > 250 &&
@@ -161,7 +181,7 @@ function draw() {
   }
 
   if (
-    mouseIsPressed === true &&
+    mouseIsPressed &&
     mouseX > 270 &&
     mouseX < 330 &&
     mouseY > 590 &&
@@ -170,6 +190,7 @@ function draw() {
     //help
     help = true;
   }
+  image(startBild, 0, 0, 850, 400);
 }
 
 function mousePressed() {
@@ -179,5 +200,8 @@ function mousePressed() {
 
   if (lost) {
     lost = false;
+  }
+  if (start) {
+    start = false;
   }
 }
