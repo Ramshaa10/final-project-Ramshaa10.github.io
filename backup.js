@@ -1,57 +1,14 @@
 let speed = 0;
-// let ballSpeedX = 10;
-// let ballSpeedY = 5;
 let score = 0;
-let highScore = 0;
-// let leftscore=0;?
-let start = true;
-let lost = false;
-let help = false;
-let newHighScore = false;
-let startBild;
-let GameOver;
-
-function preload() {
-  startBild = loadImage("./Bilder/Startbildschirm-Zoo.jpg");
-}
-console.log("startBild");
+let ballSpeedX = 3;
+let ballSpeedY = 10;
+let rightscore = 0;
+let leftscore = 0;
 
 function setup() {
-  startBild.loadPixels();
+  createCanvas(500, 500);
 }
 
-function helpButton() {
-  textSize(16);
-  fill(252, 227, 255);
-
-  text("help", 275, 610);
-
-  if (help === true) {
-    fill("green");
-    ellipse(200, 200, 10, 10);
-  }
-}
-
-function startButton() {
-  if (start === true) {
-    image(startBild, 240, 510, 120);
-
-    textFont("skia");
-    noStroke();
-    fill(29, 17, 89);
-    textSize(35);
-    textStyle(BOLD);
-    text("Start", 254, 556);
-  }
-  start = false;
-}
-
-function youlost() {
-  if (lost === true) {
-    fill("yellow");
-    rect(400, 200, 50, 50);
-  }
-}
 function design() {
   //schwarzer Kasten
   fill("black");
@@ -68,30 +25,16 @@ function count() {
   noStroke();
   textFont("skia");
   textSize(20);
-  fill("red");
-  text("score: " + score, 30, 50);
+  fill("white");
+  text("Leftscore: " + leftscore, 30, 50);
+  text("Rightscore: " + rightscore, 360, 50);
 }
 
-function highScoreCount() {
-  noStroke();
-  textFont("skia");
-  textSize(20);
-  fill(21, 129, 153);
-  text("highscore: " + highScore, 620, 50);
-
-  if (newHighScore === true && lost === true) {
-    fill("blue");
-    ellipse(359, 110, 45, 20);
-  }
-}
 let ball = {
-  x: 300,
-  y: 100,
+  x: Math.floor(Math.random() * 600) + 50,
+  y: Math.floor(Math.random() * 600) + 50,
   w: 20,
   h: 20,
-  speed: 2,
-  ballSpeedX: 10,
-  ballSpeedY: 5,
 };
 let rightPaddle = {
   x: 550,
@@ -107,13 +50,16 @@ let leftPaddle = {
 };
 
 function ballMovement(ball) {
-  // bei den Winkel Hilfe entnommen von: https://www.youtube.com/watch?v=nl0KXCa5pJk
+  if (ball.x < 30 || ball.x > 500 - 30) {
+    ballSpeedX *= -1;
+  }
+  if (ball.y < 30 || ball.y > 500 - 30) {
+    ballSpeedY *= -1;
+  }
 
   //Rechnung aufgestellt
-  ball.x += ball.ballSpeedX;
-  ball.x -= ball.ballSpeedX;
-  ball.y += ball.ballSpeedY;
-  ball.y -= ball.ballSpeedY;
+  ball.x += ballSpeedX;
+  ball.y += ballSpeedY;
 }
 
 function movement() {
@@ -137,71 +83,27 @@ function movement() {
   speed += speed;
 }
 
+function touch(ball) {
+  if (ball.x > 39 && ball.x < mouseX + 549 && ball.y + 20 >= 475) {
+    ballSpeedX *= -1;
+    ballSpeedY *= -1;
+    leftscore++;
+  }
+}
 function draw() {
   clear();
   noStroke();
   design();
   count();
-  startButton();
-  helpButton();
-  youlost();
-  highScoreCount();
   ballMovement(ball);
+  touch(ball);
   movement();
   fill("white");
-  ellipse(
-    ball.x,
-    ball.y,
-    ball.w,
-    ball.h,
-    ball.speed,
-    ball.ballSpeedX,
-    ball.ballSpeedY
-  );
+  ellipse(ball.x, ball.y, ball.w, ball.h);
   //Objekterzeugung der Paddles
   fill("pink");
   rect(leftPaddle.x, leftPaddle.y, leftPaddle.w, leftPaddle.h);
   fill("lightblue");
   rect(rightPaddle.x, rightPaddle.y, rightPaddle.w, rightPaddle.h);
   fill("white");
-  //
-  if (start) {
-    if (
-      mouseIsPressed === true &&
-      mouseX > 250 &&
-      mouseX < 350 &&
-      mouseY > 520 &&
-      mouseY < 570
-    ) {
-      //Start
-      start = false;
-      lost = false;
-      newHighScore = false;
-    }
-  }
-
-  if (
-    mouseIsPressed &&
-    mouseX > 270 &&
-    mouseX < 330 &&
-    mouseY > 590 &&
-    mouseY < 620
-  ) {
-    //help
-    help = true;
-  }
-  image(startBild, 0, 0, 850, 400);
-}
-
-function mousePressed() {
-  if (help) {
-    help = false;
-  }
-
-  if (lost) {
-    lost = false;
-  }
-  if (start) {
-    start = false;
-  }
 }
