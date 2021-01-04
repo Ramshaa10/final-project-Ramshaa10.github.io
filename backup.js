@@ -1,7 +1,7 @@
 let speed = 0;
 let score = 0;
-let ballSpeedX = 3;
-let ballSpeedY = 10;
+let ballSpeedX = 2;
+let ballSpeedY = 5;
 let rightscore = 0;
 let leftscore = 0;
 
