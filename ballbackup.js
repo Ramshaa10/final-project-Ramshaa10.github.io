@@ -1,7 +1,7 @@
 let speed = 5;
 let score = 0;
-let ballDirectX = speed;
-let ballDirectY = speed;
+let ballSpeedX = 2;
+let ballSpeedY = 5;
 let rightscore = 0;
 let leftscore = 0;
 
@@ -25,7 +25,6 @@ function count() {
   text("Leftscore: " + leftscore, 30, 50);
   text("Rightscore: " + rightscore, 360, 50);
 }
-
 let ball = {
   x: Math.floor(Math.random() * 650),
   y: Math.floor(Math.random() * 650),
@@ -44,20 +43,18 @@ let leftPaddle = {
   w: 20,
   h: 100,
 };
-// bx=width/2;
-// by=height/2;
-// bd=height/20;
-// ball.x ball.y ball.w ball.h
-function ballMovement(ball) {
-  //Rechnung aufgestellt
 
-  if (ball.y + ball.w && ball.h >= 550) {
-    ballDirectY = ballDirectY * 1;
-    ball.y = 500 - ball.w && ball.h;
+function ballMovement(ball) {
+  if (ball.x < 20 || ball.x > 500 - 20) {
+    ballSpeedX *= -1;
+  }
+  if (ball.y < 20 || ball.y > 500 - 20) {
+    ballSpeedY *= -1;
   }
 
-  ball.x = ball.x + ballDirectX;
-  ball.y = ball.y + ballDirectY;
+  //Rechnung aufgestellt
+  ball.x += ballSpeedX;
+  ball.y += ballSpeedY;
 }
 
 function movement() {
@@ -81,14 +78,20 @@ function movement() {
   speed += speed;
 }
 
-// function touch(ball) {}
+function touch(ball) {
+  if (ball.x > 39 && ball.x < mouseX + 549 && ball.y + 20 >= 475) {
+    ballSpeedX *= -1;
+    ballSpeedY *= -1;
+    leftscore++;
+  }
+}
 function draw() {
   clear();
   noStroke();
   design();
   count();
   ballMovement(ball);
-  // touch(ball);
+  touch(ball);
   movement();
   fill("white");
   ellipse(ball.x, ball.y, ball.w, ball.h);

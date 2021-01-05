@@ -9,34 +9,32 @@ let begin = true;
 let lost = false;
 let help = false;
 let newHighScore = false;
+let count = false;
 let startBild;
 let GameOver;
+let number = ["3", "2", "1"];
 
 function helpButton() {
-  textSize(16);
-  fill(252, 227, 255);
-
-  text("help", 275, 610);
-
-  if (help === true) {
-    fill("green");
-    ellipse(200, 200, 10, 10);
+  // farbwechsel
+  if (help) {
+    fill("lightblue");
+    rect(440, 15, 100, 20, 20);
+  } else {
+    // grafische darstellung
+    fill("lightgreen");
+    rect(440, 15, 100, 20, 20);
+    textSize(16);
+    fill("white");
+    text("help", 475, 30);
   }
 }
-
 function startButton() {
-  start = true;
-  if (
-    start === true &&
-    mouseIsPressed === true &&
-    mouseX >= 200 &&
-    mouseX <= 298 &&
-    mouseY >= 8 &&
-    mouseY <= 38
-  ) {
+  //farbwechsel
+  if (start) {
     fill("yellow");
     rect(200, 10, 100, 30);
   } else {
+    //grafische Darstellung
     fill("red");
     rect(200, 10, 100, 30);
     textFont("skia");
@@ -55,19 +53,14 @@ function youlost() {
   }
 }
 function design() {
-  //schwarzer Kasten
-  // fill("black");
-  // rect(0, 0, 1500, 1500);
-
   //for-schleife für die Trennwand
-
   fill("white");
   for (let i = 0; i < 5; i++) {
     rect(300, 10 + i * 130, 10, 50 + i * 5);
   }
 }
 
-function count() {
+function Count() {
   noStroke();
   textFont("skia");
   textSize(20);
@@ -87,6 +80,7 @@ function highScoreCount() {
     ellipse(359, 110, 45, 20);
   }
 }
+// hier die Objekte deklariert
 let bal = {
   x: 300,
   y: 100,
@@ -107,13 +101,9 @@ let leftPaddle = {
 };
 
 function ballMovement() {
-  // bei den Winkel Hilfe entnommen von: https://www.youtube.com/watch?v=nl0KXCa5pJk
-
-  //Rechnung aufgestellt
+  //Rechnung aufgestellt, damit sich der Ball bewegt
   ballSpeedX += ballSpeedX;
-  ballSpeedX -= ballSpeedX;
   ballSpeedY += ballSpeedY;
-  ballSpeedY -= ballSpeedY;
 }
 
 function movement() {
@@ -141,13 +131,13 @@ function draw() {
   clear();
   noStroke();
   design();
-  count();
+  Count();
   startButton();
   helpButton();
+  movement();
   youlost();
   highScoreCount();
   ballMovement();
-  movement();
   fill("white");
   ellipse(bal.x, bal.y, bal.w, bal.h);
   //Objekterzeugung der Paddles
@@ -156,44 +146,36 @@ function draw() {
   fill("lightblue");
   rect(rightPaddle.x, rightPaddle.y, rightPaddle.w, rightPaddle.h);
   fill("white");
-  //
-  //   if (start) {
-  //     if (
-  //       mouseIsPressed === true &&
-  //       mouseX > 250 &&
-  //       mouseX < 350 &&
-  //       mouseY > 520 &&
-  //       mouseY < 570
-  //     ) {
-  //       //Start
-  //       start = false;
-  //       lost = false;
-  //       newHighScore = false;
-  //     }
-  //   }
-
-  //   if (
-  //     mouseIsPressed &&
-  //     mouseX > 270 &&
-  //     mouseX < 330 &&
-  //     mouseY > 590 &&
-  //     mouseY < 620
-  //   ) {
-  //     //help
-  //     help = true;
-  //   }
-  //   image(startBild, 0, 0, 850, 400);
-}
-
-function mousePressed() {
-  if (help) {
-    help = false;
+  // Clickfunktion von startbutton
+  if (
+    mouseIsPressed === true &&
+    mouseX >= 200 &&
+    mouseX <= 298 &&
+    mouseY >= 8 &&
+    mouseY <= 38
+  ) {
+    start = true;
+    begin = false;
   }
-
+  // Clickfunktion von helpbutton
+  if (
+    mouseIsPressed === true &&
+    mouseX >= 445 &&
+    mouseX <= 534 &&
+    mouseY >= 12 &&
+    mouseY <= 34
+  ) {
+    help = true;
+  }
+}
+/* da ich nirgends help auf false setze, erteile ich hier 
+ den Befehl nach Ausführung die Variable wieder auf 
+ false zu setzen. */
+function mouseClicked() {
+  if (help) {
+    helpb = false;
+  }
   if (lost) {
     lost = false;
-  }
-  if (start) {
-    start = false;
   }
 }
