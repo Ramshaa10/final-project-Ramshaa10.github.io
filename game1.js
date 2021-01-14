@@ -1,13 +1,14 @@
 let speed = 0;
-let ballSpeedX = 10;
-let ballSpeedY = 5;
-let score = 0;
+let ballSpeedX = 4;
+let ballSpeedY = 2;
+let leftScore = 0;
+let rightScore = 0;
 let highScore = 0;
-// let leftscore=0;?
 let start = false;
-let begin = true;
 let lost = false;
 let help = false;
+let timer = false;
+let time = 100;
 let newHighScore = false;
 let count = false;
 let startBild;
@@ -18,6 +19,8 @@ function helpButton() {
   if (help) {
     fill("lightblue");
     rect(440, 15, 100, 20, 20);
+    fill("white");
+    rect(40, 40, 500, 500);
   } else {
     // grafische darstellung
     fill("lightgreen");
@@ -27,11 +30,21 @@ function helpButton() {
     text("help", 475, 30);
   }
 }
+
 function startButton() {
   //farbwechsel
   if (start) {
-    fill("yellow");
+    // help = false;
+    fill("lightyellow");
     rect(200, 10, 100, 30);
+    fill("lightyellow");
+    textSize(120);
+    textFont("skia");
+    noStroke();
+    fill("black");
+    textSize(35);
+    textStyle(BOLD);
+    text("Start", 214, 35);
   } else {
     //grafische Darstellung
     fill("red");
@@ -46,11 +59,10 @@ function startButton() {
 }
 
 function youlost() {
-  if (lost === true) {
-    fill("yellow");
-    rect(400, 200, 50, 50);
-  }
+  // fill("beige");
+  // rect(400, 200, 50, 50);
 }
+
 function design() {
   //for-schleife für die Trennwand
   fill("white");
@@ -64,7 +76,8 @@ function Count() {
   textFont("skia");
   textSize(20);
   fill("lightyellow");
-  text("score: " + score, 30, 50);
+  text("Leftscore: " + leftScore, 30, 50);
+  text("Rightscore: " + rightScore, 340, 50);
 }
 
 function highScoreCount() {
@@ -82,32 +95,49 @@ function highScoreCount() {
 // hier die Objekte deklariert
 let bal = {
   x: 300,
-  y: 100,
-  w: 20,
-  h: 20,
+  y: 200,
+  r: 30,
+  // r ist der radius vom Kreis
 };
 let rightPaddle = {
-  x: 550,
+  x: 560,
   y: 20,
   w: 20,
   h: 100,
 };
 let leftPaddle = {
-  x: 20,
+  x: 0,
   y: 150,
   w: 20,
   h: 100,
 };
 
-function ballMovement() {
-  //Rechnung aufgestellt, damit sich der Ball bewegt
-  ballSpeedX += ballSpeedX;
-  ballSpeedY += ballSpeedY;
+function ballMovement(bal) {
+  start = true;
+  bal.x += ballSpeedX;
+  bal.y -= ballSpeedY;
+
+  /* wenn die position bal.x größer ist als die von p5
+festgelegte Variable width ist und nehme -20 (bal.r), so
+sieht es aus, dass der Ball den Paddle berührt.
+ODER: bal.x ist kleiner als der Radius vom Bal.r
+Ab dem Zeitpunkt soll die Geschwindigkeit abgenommen werden, 
+sodass der Ball zurück geworfen wird */
+
+  if (bal.x > width - bal.r || bal.x < bal.r) {
+    ballSpeedX = -ballSpeedX;
+    rightScore++;
+  }
+  if (bal.y > height - bal.r || bal.y < bal.r) {
+    ballSpeedY = -ballSpeedY;
+    leftScore++;
+  }
 }
 
 function movement() {
   // arrow up, nach oben linker Paddle
   if (keyIsDown(87)) {
+    //hier wurde speed, der zugehörige Wert von 15 zugeteilt
     leftPaddle.y -= speed + 15;
   }
   // arrow down, nach unten linker Paddle
@@ -136,25 +166,28 @@ function draw() {
   movement();
   youlost();
   highScoreCount();
-  ballMovement();
+  ballMovement(bal);
+  //Objekterzeugung
   fill("white");
-  ellipse(bal.x, bal.y, bal.w, bal.h);
-  //Objekterzeugung der Paddles
+  ellipse(bal.x, bal.y, bal.r, bal.r);
   fill("pink");
   rect(leftPaddle.x, leftPaddle.y, leftPaddle.w, leftPaddle.h);
   fill("lightblue");
   rect(rightPaddle.x, rightPaddle.y, rightPaddle.w, rightPaddle.h);
   fill("white");
+
   // Clickfunktion von startbutton
-  if (
-    mouseIsPressed === true &&
-    mouseX >= 200 &&
-    mouseX <= 298 &&
-    mouseY >= 8 &&
-    mouseY <= 38
-  ) {
-    start = true;
-    begin = false;
+  if (start) {
+    if (
+      mouseIsPressed === true &&
+      mouseX >= 200 &&
+      mouseX <= 298 &&
+      mouseY >= 8 &&
+      mouseY <= 38
+    ) {
+      start = false;
+      lost = false;
+    }
   }
   // Clickfunktion von helpbutton
   if (
@@ -167,12 +200,14 @@ function draw() {
     help = true;
   }
 }
+
 /* da ich nirgends help auf false setze, erteile ich hier 
  den Befehl nach Ausführung die Variable wieder auf 
  false zu setzen. */
+
 function mouseClicked() {
   if (help) {
-    helpb = false;
+    // help = false;
   }
   if (lost) {
     lost = false;
