@@ -1,0 +1,45 @@
+body {
+  background: black;
+}
+
+header {
+  text-align: center;
+}
+
+.PongNormal {
+  color: wheat;
+  font-family: "Luminari";
+  font-size: 2.4em;
+  font-weight: bold;
+  position: absolute;
+  top: 150px;
+  left: 80px;
+}
+a.PongNormal:hover {
+  color: #bcc4a7;
+}
+
+.PongSchwer {
+  color: wheat;
+  font-family: "Luminari";
+  font-size: 2.4em;
+  font-weight: bold;
+  position: absolute;
+  top: 150px;
+  left: 340px;
+}
+a.PongSchwer:hover {
+  color: #bcc4a7;
+}
+a.Hauptseite {
+  color: wheat;
+  font-family: "Luminari";
+  font-size: 2.4em;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  left: 620px;
+}
+a.Hauptseite:hover {
+  color: #bcc4a7;
+}

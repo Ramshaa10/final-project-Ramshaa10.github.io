@@ -1,15 +1,80 @@
 body {
   background: #000000;
-
-  color: wheat;
 }
 
-.game1 {
-  color: wheat;
-  font-weight: 600;
-  font-family: "skia";
+header {
   text-align: center;
-  font-size: 20;
-  color: rgb(252, 227, 255);
-  text-decoration: none;
+}
+
+.Pong {
+  color: wheat;
+  font-family: "Luminari";
+  font-size: 1em;
+  font-weight: bold;
+  position: absolute;
+  top: 120px;
+  left: 360px;
+}
+a.Pong:hover {
+  color: #bcc4a7;
+}
+
+.Snake {
+  color: wheat;
+  font-family: "Luminari";
+  font-size: 1em;
+  font-weight: bold;
+  position: absolute;
+  top: 150px;
+  left: 360px;
+}
+a.Snake:hover {
+  color: #bcc4a7;
+}
+a.Hauptseite {
+  color: wheat;
+  font-family: "Luminari";
+  font-size: 2.4em;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  left: 620px;
+}
+a.Hauptseite:hover {
+  color: #bcc4a7;
+}
+
+.PongSchwer {
+  color: wheat;
+  font-family: "Luminari";
+  font-size: 1em;
+  font-weight: bold;
+  position: absolute;
+  top: 180px;
+  left: 360px;
+}
+a.PongSchwer:hover {
+  color: #bcc4a7;
+}
+.SnakeSchwer {
+  color: wheat;
+  font-family: "Luminari";
+  font-size: 1em;
+  font-weight: bold;
+  position: absolute;
+  top: 210px;
+  left: 360px;
+}
+a.SnakeSchwer:hover {
+  color: #bcc4a7;
+}
+
+a.Hauptseite {
+  color: wheat;
+  font-family: "Luminari";
+  font-size: 1em;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
