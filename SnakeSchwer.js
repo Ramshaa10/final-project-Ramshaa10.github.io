@@ -237,7 +237,7 @@ function draw() {
       mouseY < 570
     ) {
       //start Button
-      directions = 1;
+      direction = 1;
       begin = false;
       lost = false;
       newhighscore = false;

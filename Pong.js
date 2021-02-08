@@ -261,6 +261,6 @@ function gameOver() {
     text("You lost", 150, 150);
 
     start = false;
-    endscreen = true;
+    end = true;
   }
 }
