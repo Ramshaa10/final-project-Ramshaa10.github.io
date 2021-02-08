@@ -13,7 +13,6 @@ let newHighScore = false;
 let count = false;
 let startBild;
 let GameOver;
-let number = ["3", "2", "1"];
 
 function helpButton() {
   // farbwechsel
