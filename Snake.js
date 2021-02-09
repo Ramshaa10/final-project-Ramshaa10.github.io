@@ -3,8 +3,8 @@ let snakey = [300];
 let direction = 0; //zuweisung für Richtung/ Bewegung
 let score = 0;
 let highscore = 0;
-let time = 0; //zuweisung für "Zeit" bis zur nächsten Bewegung
-let zfaster = 0;
+let time = 0;
+let movement = 0;
 let begin = true;
 let newfood = true;
 let lost = false;
@@ -88,7 +88,6 @@ function eat() {
     newfood = true;
     snakex.push(pox);
     snakey.push(poy);
-    snakeFaster = true;
     score = score + 1;
     if (score > highscore) {
       highscore = highscore + 1;
@@ -147,9 +146,8 @@ function speed() {
     //draw läuft 4 mal durch bis snake sich erneut um 10 bewegt
     time = 0;
     move(direction);
-    if (zfaster === 20) {
-      //snake wird für 50 Durchgänge schneller, dann wieder normal
-      zfaster = 0;
+    if (movement === 20) {
+      movement = 0;
     }
   }
 }
